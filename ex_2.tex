@@ -1,0 +1,30 @@
+\section{Exercise 2}
+
+Show that $S \models \exists x F$ iff $S\models \neg\forall x \neg F$ and $\exists x F$ is unsatisfiable iff $\forall x \neg F$ is valid.\\
+
+\noindent
+\textbf{Solution.}
+Let $S$ be any structure. Case distinction:
+\begin{enumerate}
+	\item $S \models \exists x F$. Then there exists a term $t$ s.t. $S,\phi^x_t \models F$ (for any environment $\phi$). Now we evaluate $S\models \neg\forall x \neg F$ (again, for any environment $\phi$):
+	$$
+		\begin{array}{l l}
+			S,\phi\models \neg\forall x \neg F & \equiv S,\phi\not\models \forall x \neg F\\
+			& \equiv S,\phi^x_{d} \not\models \neg F \mt{ for all } d \mt{ in } D\\
+			& \mt{We choose $d \rightarrow t$.}\\
+			& \equiv S,\phi^x_{t} \not\models \neg F\\
+			& \equiv S,\phi^x_{t} \models F
+		\end{array}
+	$$
+	
+	\item $S \not\models \exists x F$. Then there exists no term $t$ s.t. $S,\phi^x_t \models F$. We now evaluate $S\not\models \neg\forall x \neg F$:
+	$$
+		\begin{array}{l l}
+			S,\phi\not\models \neg\forall x \neg F & \equiv S,\phi\models \forall x \neg F\\
+			& \equiv S,\phi^x_{d} \models \neg F \mt{ for all } d \mt{ in } D\\
+			& \equiv S,\phi^x_{d} \not\models F \mt{ for all } d \mt{ in } D\\
+		\end{array}
+	$$
+	Therefore, if we substitute any term $t$ for $d$, $S,\phi^x_t\models F$ will be false.
+\end{enumerate}
+

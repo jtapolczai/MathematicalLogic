@@ -1,0 +1,72 @@
+\section{Exercise 1}
+
+$$
+	\begin{array}{l}
+		L = \{e/0,\circ/2\}\\
+		\\
+		F = F_1 \wedge F_2 \wedge F_3\\
+		F_1 = [\forall x,y,z] \circ(\circ(x,y),z) = \circ(x,\circ(y,z))\\
+		F_2 = [\forall x] \circ(e,x) = x\\
+		F_3 = [\forall x][\exists y] \circ(x,y) = e\\
+		\\
+		S = \{\Z,\{\hat{e},\hat{\circ}\}\}
+	\end{array}
+$$
+
+Prove: $S,\phi \models F$ (for any $\phi$).\\
+
+\noindent
+\textbf{Solution.}
+
+$$
+	S,\phi \models F \equiv S,\phi \models (F_1 \wedge F_2) \wedge F_3 \equiv S,\phi \models F_1 \mt{ and } S,\phi \models F_2 \mt{ and } S,\phi \models F_3			
+$$
+
+\begin{itemize}
+	\item $F_1$: \\$
+		\begin{array}{l}
+			S,\phi \models F_1 \equiv S,\phi^{x\ y\ z}_{a\ b\ c} \models ((x \circ y) \circ z) = (x \circ (y \circ z)) \mt{ for all } a,b,c \mt{ in } \Z\\
+			\\
+			\mt{(We will refer to $\phi^{x\ y\ z}_{a\ b\ c}$ by the marco $\varphi$ and ``for all $a,b,c$ in $\Z$'' will henceforth}\\
+			\mt{be ommitted for readability.)}\\
+			\\
+			S,\phi \models F_1 \equiv (\varphi((x \circ y) \circ z),\ \varphi(x \circ (y \circ z))) \in \hat{=}\\
+			\\
+			S,\phi \models F_1 \equiv (\varphi(x \circ y)\ \hat{\circ}\ \varphi(z),\ \varphi(x)\ \hat{\circ}\ \varphi(y \circ z)) \in \hat{=}\\
+			\\
+			S,\phi \models F_1 \equiv ((a\ \hat{\circ}\ b),\ c\ \hat{=}\ a\ \hat{\circ}\ (b\ \hat{\circ}\ c)) \in \hat{=}\\
+			\\
+			S,\phi \models F_1 \equiv ((a+b)\ c,\ a + (b + c)) \in \hat{=}\\
+			\mt{Associativity; provable by induction on $+$.}
+		\end{array}
+	$
+	\item $F_2$: \\$
+		\begin{array}{l}
+			S,\phi \models F_2 \equiv S,\phi^x_a \models e \circ x = x \mt { for all } a \mt{ in } \Z\\
+			\\
+			S,\phi \models F_2 \equiv (\phi^x_a(e \circ x),\ \phi^x_a(x)) \in \hat{=}\\
+			\\
+			S,\phi \models F_2 \equiv (\phi^x_a(e)\ \hat{\circ}\ \phi^x_a(x),\ a) \in \hat{=}\\
+			\\
+			S,\phi \models F_2 \equiv\ (\hat{e}\ + a,\ a) \in \hat{=}\\
+			\\
+			S,\phi \models F_2 \equiv\ (0 + a,\ a) \in \hat{=}\\
+			\mt{Unit element; provable by induction on/definition of $+$.}
+		\end{array}
+	$
+	\item $F_3$: \\$
+		\begin{array}{l}
+			S,\phi \models F_3 \equiv S,\phi^x_a \models [\exists y] x \circ y = e \mt { for all } a \mt{ in } \Z\\
+			\\
+			S,\phi \models F_3 \equiv S,\phi^{x\ y}_{a\ (-a)} \models x \circ y = e \mt { for all } a \mt{ in } \Z\\
+			\\
+			S,\phi \models F_3 \equiv S,\phi^{x\ y}_{a\ (-a)} \models x \circ y = e\\
+			\\
+			S,\phi \models F_3 \equiv (\phi^{x\ y}_{a\ (-a)}(x \circ y),\ \phi^{x\ y}_{a\ (-a)}(e)) \in \hat{=}\\
+			\\
+			S,\phi \models F_3 \equiv (a + (-a),\ 0) \in \hat{=}\\
+			\mt{Provable by induction on $+$.}
+		\end{array}
+	$
+\end{itemize}
+

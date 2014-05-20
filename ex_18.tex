@@ -1,0 +1,97 @@
+\section{Exercise 18}
+
+Show that if $t$ is a ground term, then there is a $k \in \N$ such that $\proves{\bQ}{t = k}$.\\
+
+\noindent
+\textbf{Solution.} The theory $\bQ$ and the here used language $L = (\N, \{0\backslash0, s\backslash1, +\backslash2, \cdot\backslash2, =\backslash2, <\backslash2\})$ are defined in section 7 ``Formal arithmetic''. We prove the proposition via structural induction.
+To avoid confusion, we'll denote $\bQ$'s language-level equality as $=$ and our syntactic equality as $\equiv$.
+Note that, in addition to $\bQ$'s axioms, we also need the equality axioms Refl, Symm, Trans and Ext. Ext is the axiom schema of extensionality and allows us to replace a subterm $x_i$ of $f(x_1,\dots,x_n)$ with a subterm $y_i$ if $x_i = y_i$ (for all $f \in L$ and all $1 \leq i \leq n$).
+
+$$
+	\begin{array}{l}
+		\mt{Refl} \equiv \allQ{x} x = x,\\
+		\mt{Symm} \equiv \allQ{x,y} x = y \Rightarrow y = x,\\
+		\mt{Trans} \equiv \allQ{x,y,z} x = y \wedge y = z \Rightarrow x = z,\\
+		\mt{Ext}_{f,i} \equiv \allQ{x_1,\dots,x_n,y_i} x_i = y_i \Rightarrow f(x_1,\dots,x_i,\dots,x_n) = f(x_1,\dots,y_i,\dots,x_n).
+	\end{array}
+$$
+
+\begin{itemize}
+	\item[Base case.] $t \equiv s(\cdots s(0)\cdots) \equiv s^n(0)$. This follows from Refl: $s^n(0) = s^n(0)$.
+	
+	\item[Step case ``$+_1$''.] $t \equiv t' + 0$. IH: $t' = s^n(0)$.\\
+	Per (3), $t' + 0 = t'$.\\
+	Per Trans, $(t' + 0 = t') \wedge (t' = s^n(0)) \Rightarrow (t' + 0 = s^n(0))$.\\
+	Therefore, $t' + 0 = s^n(0)$.
+	
+	\item[Step case ``$+_2$''.] $t \equiv t' + s(r)$. IH: $t' = s^n(0)$ and $r = s^m(0)$ and $s^n(0) + s^m(0) = s^{n+m}(0)$.\\
+	Per (4), $t' + s(r) = s(t' + r)$.\\
+	Now we apply Symm two times, followed by Ext$_{+,1}$ and Ext$_{+,2}$, instantiating $x_i$,$y_i$ with the parts of the IH:
+	$$
+		\begin{array}{l l l}
+			t' = s^n(0) & \Rightarrow & s^n(0) = t'\\
+			r = s^m(0) & \Rightarrow & s^m(0) = r\\
+			s^n(0) = t' & \Rightarrow & s^n(0) + s^m(0) = t' + s^m(0)\\
+			s^m(0) = r & \Rightarrow & s^n(0) + s^m(0) = t' + r
+		\end{array}
+	$$
+	We now know that $s^n(0) + s^m(0) = t' + r$. Applying Symm, we get $t' + r = s^n(0) + s^m(0)$. We again apply Ext$_s,1$ to the term $s(t' + r)$:
+	
+	$$
+		\begin{array}{l l l}
+			t' + r = s^n(0) + s^m(0) & \Rightarrow & s(t' + r) = s(s^n(0) + s^m(0))
+		\end{array}
+	$$
+	
+	We apply Ext$_s,1$ again to this, using the third part of the IH:
+	
+	$$
+		\begin{array}{l l l}
+			s^n(0) + s^m(0) = s^{n+m}(0) & \Rightarrow & s(s^n(0) + s^m(0)) = s(s^{n+m}(0))
+		\end{array}
+	$$
+	
+	Through repeated application of Trans, we get
+	$$
+		t \equiv t' + s(r) = s(t' + r) = s(s^n(0) + s^m(0)) = s(s^{n+m}(0)) \equiv s^{n+m+1}(0)
+	$$
+	
+	\item[Step case ``$\cdot_1$''.] $t \equiv t' \cdot 0$. IH: $t' = s^n(0)$.\\
+	Per (5), $t' + 0 = 0$.\\
+	Per Trans, $(t' \cdot 0 = 0) \wedge (t' = s^n(0)) \Rightarrow (t' \cdot 0 = 0)$.\\
+	Therefore, $t' \cdot 0 = 0$.
+	
+	\item[Step case ``$\cdot_2$''.] $t \equiv t' \cdot s(r)$. IH: $t' = s^n(0)$ and $r = s^m(0)$ and $s^n(0) \cdot s^m(0) = s^{n\cdot m}(0)$ and $s^{n \cdot m}(0) + s^n(0) = s^{n\cdot (m + 1)}(0)$.\\
+	Per (6), $t' \cdot s(r) = (t' \cdot r) + t$.\\
+	
+	This case is basically analogous to $+_2$. We again apply Sym and Ext$_{\cdot,1}$, Ext$_{\cdot,2}$:
+	
+	$$
+		\begin{array}{l l l}
+			t' = s^n(0) & \Rightarrow & s^n(0) = t'\\
+			r = s^m(0) & \Rightarrow & s^m(0) = r\\
+			s^n(0) = t'(0) & \Rightarrow & s^n(0) \cdot s^m(0) = t' \cdot s^m(0)\\
+			s^m(0) = r & \Rightarrow & s^n(0) \cdot s^m(0) = t' \cdot r
+		\end{array}
+	$$
+	
+	Through Sym, we get $t' \cdot r = s^n(0) \cdot s^m(0)$ and, through the IH and Trans, $t' \cdot r = s^{n\cdot m}(0)$. We now apply Ext$_{+,1}$, Ext$_{+,2}$ to $(t' \cdot r) + t'$:
+	
+	$$
+		\begin{array}{l l l}
+			t' \cdot r = s^{n\cdot m}(0) & \Rightarrow & (t' \cdot r) + t' = s^{n\cdot m}(0) + t'\\
+			t' = s^n(0) & \Rightarrow & (t' \cdot r) + t' =  s^{n\cdot m}(0) + s^n(0)\\
+		\end{array}
+	$$
+	
+	We apply the last part of the IH and Trans to get
+	
+	$$
+		(t' \cdot r) + t' =  s^{n\cdot m}(0) + s^n(0) = s^{n\cdot (m+1)}(0)
+	$$
+\end{itemize}
+
+The induction hypotheses (especially $s^n(0) + s^m(0) = s^{n+m}(0)$ and $s^n(0) \cdot s^m(0) = s^{n\cdot m}(0)$) might seem problematic, but these are always indeed always proven in the last lines of ``$+_2$'' and ``$\cdot_2$''. The hypothesis $s^{n \cdot m}(0) + s^n(0) = s^{n\cdot (m + 1)}(0)$ can be derived from these two if we substitute suitable values for $n$ and $m$.
+
+The induction in this proof is not part of $\bQ$, but works on a metalinguistical level. Since $t$ is a concrete (but arbitrary) term, this is not a problem, however: for any given $t$, we can unfold the definitions of $\bQ$'s formulas and obtain a finitely long proof which, {\em is constructed by induction}, but isn't inductive itself.
+

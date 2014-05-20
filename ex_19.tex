@@ -1,0 +1,26 @@
+\section{Exercise 19}
+
+Show that if
+
+\begin{enumerate}
+	\item If $s,t$ are ground terms, then either $\proves{\bQ}{s = t}$ or $\proves{\bQ}{s \neq t}$.\\
+	
+	\textbf{Solution.} In the previous example, we showed that all ground terms $s,t$ are equal (=) to terms of the form $s^n(0), s^m(0)$. If $n = m$, then, through Refl, $\proves{\bQ}{s = t}$. Suppose, on the other hand, that $n \neq m$ and, w.l.o.g., $n < m$. We can give an indirect inductive proof:
+	
+	\begin{itemize}
+		\item[Step case.] If $s(s^{n-1}(0)) = s(s^{m-1}(0))$, then, per (2), $s^{n-1}(0) = s^{m-1}(0)$.
+		\item[Base case.] Since we assumed $n < m$, we must at some point come to the assertion that $0 = s^{m - k}(0)$ (for some $k$). However, this contradicts (1). Consequently, $s^n(0) = s^m(0)$ cannot hold if $n \neq m$ and thus, $s^n(0) \neq s^m(0)$.
+	\end{itemize}
+	
+	We can encode this proof in $\bQ$ through the following formula:
+	
+	$$
+		s^n(0) = s^m(0) \Rightarrow s^{n-1}(0) = s^{m-1}(0) \Rightarrow \dots \Rightarrow 0 = s^{m-k}(0)
+	$$
+	
+	By using $0 \neq s(x)$, we show $\neg (0 = s^{m-1}(0))$ and therefrom ``roll up'' the chain of implications until we get $\neg (s^n(0) = s^m(0))$.
+	
+	\item If $s,t$ are ground terms, then either $\proves{\bQ}{s > t}$ or $\proves{\bQ}{s = t}$ or $\proves{\bQ}{s < t}$.\\
+	
+	\textbf{Solution.} This follows immediately from (9). The semantics of $\proves{Q}{s < t \vee s = t \vee s > t}$ are precisely ``$\proves{\bQ}{s > t}$ or $\proves{\bQ}{s = t}$ or $\proves{\bQ}{s < t}$''.
+\end{enumerate}

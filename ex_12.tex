@@ -1,0 +1,20 @@
+\section{Exercise 12}
+
+Prove the following properties of the deductive closure, where $(\Gamma_i)_{i \in \N}$ are sets of sentences:
+
+\begin{enumerate}
+	\item $\Gamma_1 \subseteq \Gamma_2$ implies $CL(\Gamma_1) \subseteq CL(\Gamma_2)$,
+	
+	\textbf{Solution.} Let $F$ be any sentence in $CL(\Gamma_1)$ and let $P_F$ be a proof of $F$ using the assumptions $\Delta \subseteq \Gamma_1$. Since $\Gamma_1 \subseteq \Gamma_2$, $\Delta \subseteq \Gamma_2$, and therefore, $F$ can be proven in $\Gamma_2$ too.\\
+	
+	More generally (and to contrast the classical $\vdash$-relation to that of non-monotonic logics), we can add any set of assumptions to a proof $P_F$ without diminishing the provability of sentences. It is because of that that the addition of new sentences to a theory cannot take away any element from its deductive closure.
+	
+	\item $CL(CL(\Gamma_1)) = CL(\Gamma_1)$, \textbf{Solution.} See the proof in the solution to Exercise 10.
+	
+	\item $\bigcup_{i \in \N} CL(\Gamma_i) \subseteq CL\left(\bigcup_{i \in \N} \Gamma_i\right)$,
+	
+	\textbf{Solution.} $\bigcup_{i \in \N} CL(\Gamma_i)$ is the union of the deductive closure of every $CL(\Gamma_i)$ ($i \in \N$). Therefore, it suffices to show that every sentence $F$ which occurs in $CL(\Gamma_k)$ (for some $k \in \N$) is also in $CL\left(\bigcup_{i \in \N} \Gamma_i\right)$.
+	
+	Let $k$ thus be an index and let $F$ be a sentence in $CL(\Gamma_k)$. This implies that $\Gamma_k \vdash F$. Per the monotonicity discussed in 1., $\Gamma_k \vdash F$ implies that $\Delta \cup \Gamma_k \vdash F$ for any $\Delta$ and, specifically, $\left(\bigcup_{i \in \N - \{k\}} \Gamma_i\right) \cup \Gamma_k \vdash F \Leftrightarrow \left(\bigcup_{i \in \N} \Gamma_i\right) \vdash F$. Therefore, $F \in CL(\bigcup_{i \in \N}\Gamma_i)$.
+\end{enumerate}
+

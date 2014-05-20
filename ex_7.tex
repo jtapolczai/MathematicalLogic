@@ -1,0 +1,25 @@
+\section{Exercise 7}
+
+Prove that $\vdash A \rightarrow B$ and $\vdash A$ imply that $\vdash B$.\\
+
+\noindent
+\textbf{Solution.} Instead of LK, we now use the sequent calculus from Definition 6 in the script.\\
+
+\noindent
+We show the following\footnote{$A, A \rightarrow B \vdash B$ is transformed into $\vdash A \wedge (A \rightarrow B) \rightarrow B$ by the deduction theorem.}: $\vdash A \wedge (A \rightarrow B) \rightarrow B$. By the definition of $\rightarrow$, this is equivalent to: $\vdash \neg A \vee (A \vee \neg B) \vee B$.\\
+
+\noindent
+\textbf{Sequent proof:}
+
+$$
+	\begin{array}{l l l}
+		1. & \{A,\neg A, B\} & \mt{Axiom}\\
+		2. & \{\neg A, \neg B, B\} & \mt{Axiom}\\
+		3. & \{A \wedge \neg B, \neg A, B\} & \wedge\mt{-rule }\\
+		4. & \{\neg A \vee (A \wedge \neg B), B\} & \vee\mt{-rule}\\
+		5. & \{\neg A \vee (A \wedge \neg B) \vee B\} & \vee\mt{-rule}\\
+	\end{array}
+$$
+
+Which was to be proven.
+

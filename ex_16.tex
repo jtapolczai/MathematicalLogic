@@ -1,0 +1,65 @@
+\section{Exercise 16}
+
+\begin{itemize}
+	\item Show that if a set $S \in \N^2$ is p.r., then the set
+	
+	$$
+		\pi(S) = \{n\ |\ \forall m < n: (n,m) \in S  \}
+	$$
+	
+	is p.r.\\
+	
+	\textbf{Solution.} We give a p.r. characteristic function for $\pi(S)$. First, we define the template \texttt{forall}, which is instantiated with a predicate $P : \N^2 \rightarrow \N$. It takes a number $n$ and returns $1$ if $P(m) = 1$ for all $m < n$ and 0 otherwise:
+	
+	$$
+		\begin{array}{l}
+			\texttt{forall}_P \equiv \mt{Cn}[\mt{Pr}[c_{0,1}, \texttt{rec}], \mt{id}^1_1, \mt{id}^1_1] \\
+			\mt{where}\\
+			\quad \texttt{rec} \equiv \mt{Cn}[\texttt{IfThenElse}, \mt{Cn}[P, \mt{id}^3_1, \mt{id}^3_1], \mt{id}^3_3, c_{3,0}]
+		\end{array}
+	$$
+	
+	In functional notation, \texttt{forall} reads:
+	
+	\begin{verbatim}
+	forall{P}(n) = forall'(n,n)
+		where forall'(n,0) = 1
+		      forall'(n,m+1) = if P(n,m) then forall'(n,m) else 0
+	\end{verbatim}
+	
+	We copy $n$ (say, into $m$) and begin counting that copy $m$ down to 0, checking at each stage whether $P(n,m)$ holds. If so, we recurse; if not, we halt and return 0. When $m$ reaches 0, 1 is returned.
+	
+	The characteristic function of $\pi(S)$ is now easily defined and its correctness follows from that of \texttt{forall}:
+	
+	$$
+		\chi_{\pi(S)} \equiv \texttt{forall}_{\chi_S}
+	$$
+	
+	\item Show that the set of primes
+	
+	$$
+		\mathbb{P} = \{p\ |\ p > 1 \wedge \forall n \in \N : n | p \Rightarrow (n = 1 \vee n = p) \}
+	$$
+	
+	is p.r.\\
+	
+	\textbf{Solution.} Again, we can make good use of the \texttt{forall} template in giving a p.r. characteristic function for $\mathbb{P}$.
+	
+	$$
+		\begin{array}{l}
+			\chi_{\mathbb{P}} \equiv \mt{Cn}[\texttt{and}, \texttt{gt1}, \texttt{forall}_{\texttt{factor}}]\\
+			\mt{where}\\
+			\quad \texttt{gt1} \equiv \mt{Cn}[(\texttt{sgn} \circ m), \mt{id}^1_1, c_{1,1}]\\
+			\quad \texttt{factor} \equiv \mt{Cn}[\texttt{IfThenElse}, |', \texttt{cond}, c_{2,1}]\\
+			\quad |' \equiv \mt{Cn}[|, \mt{id}^2_2, \mt{id}^2_1]\\
+			\quad \texttt{cond} \equiv \mt{Cn}[\texttt{or}, =, \mt{Cn}[=, c_{2,1}, \mt{id}^2_2]]
+		\end{array}
+	$$
+	
+	$\chi_\mathbb{P}$ is a rather straightforward encoding of the definition of $\mathbb{P}$. \texttt{and} was defined above; \texttt{gt1} stands for ``greater than 1'', \texttt{factor} encodes the condition $n | p \Rightarrow (n = 1 \vee n = p)$, $|'$ is $|$ with its arguments flipped and \texttt{cond} encodes $(n = 1 \vee n = p)$.
+	
+	The only thing of note is that, in the definition of $\mathbb{P}$, an unbounded universal quantification was used, whereas \texttt{forall} is bounded from above. This is not a problem: the quantified variable $n$ is only used in the test $n | p$ and, of course, all factors of $p$ are $\leq p$. Here, the bounded quantification of \texttt{forall} is sufficient.
+	
+	We can quite easily see that the construction is correct and that thereby, $\mathbb{P}$ is p.r.
+\end{itemize}
+

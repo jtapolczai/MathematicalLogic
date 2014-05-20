@@ -1,0 +1,61 @@
+\section{Exercise 13}
+
+Show that for all $n,k \in \N$ the function $c_{k,n} : \N^n \rightarrow \N : (x_1,\dots,x_n) \mapsto k$ is primitively recursive. Further show that the functions \texttt{neg}, \texttt{or}, \texttt{IfThenElse} are primitively recursive.\\
+
+\noindent
+\textbf{Solution.} $c_{n,k}$ is the $n$-ary constant function which discards its arguments and returns $k$ (note that $k$ is a constant, not an argument). It can be realized primitively recursively thus:
+
+$$
+	c_{n,k} \equiv \mt{Cn}[\underset{k \mt{ times}}{\underbrace{s \circ \dots \circ s}},z_n] \quad \mt{where } f \circ g \equiv \mt{Cn}[f,g]
+$$
+
+Equational reasoning proves the correctness of the definition:
+
+$$
+	\begin{array}{l l l}
+	c_{n,k}(x_1,\dots,x_n) & = & \mt{Cn}[\underset{k \mt{ times}}{\underbrace{s \circ \dots \circ s}},z_n] (x_1,\dots,x_n)\\
+			& = & \underset{k \mt{ times}}{\underbrace{s \circ \dots \circ s}}(z_n(x_1,\dots,x_n))\\
+			& = & \underset{k \mt{ times}}{\underbrace{s \circ \dots \circ s}}(0)\\
+			& = & k
+	\end{array}
+$$
+
+\begin{itemize}
+	\item $\texttt{sgn} : \N \rightarrow \N$. \texttt{sgn} returns 0 if its argument is 0 and 1 otherwise. Its p.r. definition is:
+	
+	$$
+		\texttt{sgn} \equiv \mt{Pr}[z_0,c_{1,1} \circ id_2^1]
+	$$
+	
+	For $x_1 = 0$, $\texttt{sgn}(x_1) = z_0() = 0)$. For $x_1 \neq 0$, $\texttt{sgn}(x_1)$ first projects out $x_1$ and then calls the constant function $c_{1,1}$, returning 1.\\
+	
+	\item $\texttt{neg} : \N \rightarrow \N$. \texttt{neg} returns 1 if its argument is 0 and 1 otherwise. Its definition:
+	
+	$$
+		\texttt{neg} \equiv \mt{Pr}[c_{0,1},z_{2}]
+	$$
+	
+	For the base case of $x_1$, the constant function $c_{0,1}$ is returned. Otherwise, $z_{2}$ returns 0.\\
+	
+	\item $\texttt{or} : \N^2 \rightarrow \N$. \texttt{or} returns $0$ if both its arguments are $0$ and $1$ otherwise.
+	
+	$$
+		\texttt{or} \equiv \texttt{sgn} \circ \texttt{plus}
+	$$
+	
+	\texttt{plus} is defined in the script and simply performs addition. It is easy to see that it, composed with \texttt{sgn}, delivers the correct result.
+	
+	\item $\texttt{IfThenElse} : \N^3 \rightarrow \N$. If $x_1 \neq 0$, $x_2$ is returned, otherwise $x_3$.
+	
+	$$
+		\begin{array}{l}
+			\texttt{IfThenElse} \equiv \mt{Cn}[\texttt{if}, \mt{id}^3_3, \mt{id}^3_2, \mt{id}^3_1]\\
+			\mt{where}\\
+			\quad \texttt{if} \equiv \mt{Pr}[\mt{id}^2_1, \mt{id}^4_2]
+		\end{array}
+	$$
+	
+	We first rearrange $(x_1,x_2,x_3)$ into $(x_3,x_2,x_1)$. Then we use Pr to perform a case distinction: if $x_1 = 0$, we select $x_3$ (the else-branch). Otherwise, we select $x_2$ (the if-branch).
+
+\end{itemize}
+

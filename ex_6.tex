@@ -1,0 +1,46 @@
+\section{Exercise 6}
+
+Prove that $\vdash \nnf(A \rightarrow B)$ implies $\vdash \{\overline{\nnf(A)}, \nnf(B)\}$.\\
+
+\noindent
+\textbf{Solution.} $\nnf(A \rightarrow B) \underset{\rightarrow\mt{-def}}{=} \nnf(\neg A \vee B) \underset{\nnf\mt{-def}}{=} \nnf(\neg A) \vee \nnf(B)$. Therefore,
+
+$$
+	\vdash \nnf(A \rightarrow B) \Leftrightarrow\ \vdash \nnf(\neg A) \vee \nnf(B)
+$$
+
+Case distinction:
+\begin{itemize}	
+	\item $\vdash \nnf(\neg A)$. In the previous example, we proved that nnf($\neg A$) = $\overline{\mt{nnf}(A)}$. Therefore, $\vdash \nnf(\neg A) \Leftrightarrow\ \vdash \overline{\nnf(A)}$ and $\vdash \nnf(\neg A) \vee \nnf(B) \Leftrightarrow\ \vdash \overline{\nnf(A)} \vee \nnf(B)$. For the latter statement, it suffices to provide an LK-proof (since LK is complete):
+	
+	\begin{prooftree}
+		\AxiomC{$P_A$}
+		\UnaryInfC{$\vdash \overline{\nnf(A)}$}
+		\RightLabel{$\vee r$}
+		\UnaryInfC{$\vdash \overline{\nnf(A)} \vee \nnf(B)$}
+	\end{prooftree}
+	
+	By the assumption $\vdash \nnf(\neg A)$, the proof $P_A$ exists.
+	
+	\item $\vdash \nnf(B)$. We again provide an LK-proof:
+	
+	\begin{prooftree}
+		\AxiomC{$P_B$}
+		\UnaryInfC{$\vdash \nnf(B)$}
+		\RightLabel{$\vee r$}
+		\UnaryInfC{$\vdash \overline{\nnf(A)} \vee \nnf(B)$}
+	\end{prooftree}
+	
+	By the assumption $\vdash \nnf(B)$, the proof $P_B$ exists.
+	
+	\item The third case is that $A=B$. In that case, neither $\vdash \nnf(\neg A)$ nor $\vdash \nnf{A}$ has to hold in general. The statement $\vdash \nnf(\neg A) \vee \nnf(A)$ is still true, however. First, we ``unapply'' the $\vee$-case of \nnf: $\nnf(\neg A) \vee \nnf(A) \Rightarrow \nnf(\neg A \vee A)$. Now let us observe that $\nnf$ preserves provability for any formula $P$, i.e. $\vdash P \Leftrightarrow\ \vdash \nnf(P)$\footnote{This can be easily proven by induction on the definition of \nnf, but will be omitted here.}. Applying this to our example, we get: $\vdash \nnf(\neg A \vee A) \Rightarrow \vdash \neg A \vee A$. Now it suffices to give a proof of $\neg A \vee A$\footnote{This technique would have been powerful enough to cover the other two cases too, but the third case was a later addition.}:
+	
+	\begin{prooftree}
+		\AxiomC{$A \vdash A$}
+		\RightLabel{$\neg r$}
+		\UnaryInfC{$\vdash \neg A \vee A$}
+	\end{prooftree}
+\end{itemize}
+
+Since the semantics of $\vdash \{\overline{\nnf(A)}, \nnf(B)\}$ are ``$\vdash \overline{\nnf(A)}$ or $\vdash \nnf(B)$'' and we have showed that either $A = B$, or at least one of $P_A, P_B$ exists, the proof is complete.
+

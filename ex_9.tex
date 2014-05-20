@@ -1,0 +1,34 @@
+\section{Exercise 9}
+
+Let $L=\{P/1\}$ and $F = \forall x (P(x) \vee \neg P(x)$. Let $T = CL(\{F\})$. Show that $T$ is incomplete.\\
+
+\noindent
+\textbf{Solution.} Per Definition of ``completene'', $T$ being incomplete means:
+$$
+	\exists S (F \not\vdash S \wedge F \not\vdash \neg S).
+$$
+
+Since \textbf{LK} (without cut) is complete, it suffices to find a formula $S$ s.t. not proof of either $S$ or $\neg S$ exists. Let $S$ be $\forall x P(x)$.
+
+\begin{prooftree}
+	\AxiomC{\Lightning}
+	\UnaryInfC{$\vdash P(y), P(y)$}
+	\RightLabel{$t \leftarrow y$}
+	\UnaryInfC{$\vdash P(y), P(t)$}
+	\RightLabel{$\neg l$}
+	\UnaryInfC{$\neg P(t) \vdash P(y)$}
+	\AxiomC{$P(y) \vdash P(y)$}
+	\RightLabel{$t \leftarrow y$}
+	\UnaryInfC{$P(t) \vdash P(y)$}
+	\RightLabel{$\vee l$}
+	\BinaryInfC{$P(t) \vee \neg P(t) \vdash P(y)$}
+	\RightLabel{$\forall l$}
+	\UnaryInfC{$\forall x (P(x) \vee \neg P(x)) \vdash P(y)$}
+	\RightLabel{$\forall r$}
+	\UnaryInfC{$\forall x (P(x) \vee \neg P(x)) \vdash \forall x P(x)$}
+\end{prooftree}
+
+We can easily see that the \Lightning-branch cannot possibly be closed, whatever term we assign to $t$. The only way in which we could permute the rule applications is by applying $\forall l$ first. This, however, would be fruitless, as the subsequent application of $\forall r$ would then require the introduction of an eigenvariable which did not occur on the left side. Structural rules.\\
+
+Since $LK$ is also sound, we can provide a model both $F$ and $S$ and thereby prove that $F$ cannot prove $\neg S$. Let $D$ be some non-empty domain and $I$ and interpretation with $I(P) = \emptyset$. Clearly, both $F$ and $S$ evaluate to true under $I$. Therefore, there exists a model of $F$ and $S$ and no sound calculus can prove $F \vdash \neg S$ (assuming consistency).
+

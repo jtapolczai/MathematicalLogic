@@ -1,0 +1,78 @@
+\section{Exercise 20}
+
+Prove Proposition 10: for all $k \in \N$ we have $\proves{\bQ}{\allQ{x} x < k \Leftrightarrow (x = 0 \vee x = 1 \vee \dots \vee x = (k - 1))}$.\\
+
+\noindent
+\textbf{Solution.} We can unroll (8) by repeatedly instantiating $y$ to attain this formula. We can construct the proof inductively, in a sense: we construct a proof for $k = 1$ and, having a proof of $k = n$, we can construct a proof for $k = n+1$. Merely the {\em construction} of the proof is inductive, the proof itself won't be.
+
+\begin{enumerate}
+	\item[Optional base case.] It's not clear whether the formula is defined for $k=0$, but we can do so if we assume the empty disjunction to be $\bot$ (the neural element of $\vee$).
+	
+	\begin{prooftree}
+		\AxiomC{$\proves{\bQ',x_0 < 0}{\bot, x_0 < 0}$}
+		\RightLabel{$\neg l$}
+		\UnaryInfC{$\proves{\bQ', \neg (x_0 < 0), x_0 < 0}{\bot}$}
+		\RightLabel{$\forall l$}
+		\UnaryInfC{$\proves{\bQ, x_0 < 0}{\bot}$}
+		\RightLabel{$\Rightarrow r$}
+		\UnaryInfC{$\proves{\bQ}{x_0 < 0 \Rightarrow \bot}$}
+		
+		\AxiomC{(Note: $\proves{}{A} \equiv \proves{\top}{A}$)}
+		\UnaryInfC{$\proves{}{\top, x_0 < 0}$}
+		\RightLabel{$\neg l$}
+		\UnaryInfC{$\proves{\bot}{x_0 < 0}$}
+		\RightLabel{$\Rightarrow r$}
+		\UnaryInfC{$\proves{}{\bot \Rightarrow x_0 < 0}$}
+		
+		\RightLabel{$\wedge r$}
+		\BinaryInfC{$\proves{\bQ}{x_0 < 0 \Rightarrow \bot \wedge \bot \Rightarrow x_0 < 0}$}
+		\RightLabel{def. $\Leftrightarrow$}
+		\UnaryInfC{$\proves{\bQ}{x_0 < 0 \Leftrightarrow \bot}$}
+		\RightLabel{$\forall r$}
+		\UnaryInfC{$\proves{\bQ}{\allQ{x} x < 0 \Leftrightarrow \bot}$}
+	\end{prooftree}
+	
+	As we can see, even this case is quite cumbersome; I will therefore sketch the other two somewhat more informally.
+	
+	\item[Base case.] Let $k=1=s(0)$. We have to construct a proof s.t.
+	
+	$$
+		\proves{\bQ}{\allQ{x} x < s(0) \Leftrightarrow x = 0}
+	$$
+	
+	We can instantiate (8) with $y \rightarrow s(0)$. It becomes:
+	
+	$$
+		\allQ{x} x < s(0) \Leftrightarrow x < 0 \vee x = 0
+	$$
+	
+	From (7), we know that $x < 0$ is false and thus, if we appropriately unpack and re-pack the formula above, we get, $\allQ{x} x < s(0) \Leftrightarrow x = 0$ remains, which is what we wanted.
+	
+	\item Let $k = n+1 = s^{n+1}(0)$ and let us assume the existence of a proof $P_n$ for $k = n$ as the IH --- that is:
+	
+	\begin{prooftree}
+		\AxiomC{$P_n$}
+		\UnaryInfC{$\proves{\bQ}{\allQ{x} x < s^n(0) \Leftrightarrow (x = 0 \vee \dots \vee x = s^{n-1}(0))}$}
+	\end{prooftree}
+	
+	From this, we construct a proof $P_{n+1}$ by instantiating (8) with $y \rightarrow s^{n+1}(0)$, getting
+	
+	$$
+		\allQ{x} x < s^{n+1}(0) \Leftrightarrow x < s^n(0) \vee x = s^n(0)
+	$$
+	
+	Now we use the IH and replace $s^n(0)$ with $(x = 0 \vee \dots \vee x = s^{n-1}(0))$, again by unpacking and re-packing the formula according to the rules of $\Leftarrow$ and $\forall r$. We get:
+	
+	$$
+		\allQ{x} x < s^{n+1}(0) \Leftrightarrow x = 0 \vee \dots \vee x = s^{n-1}(0) \vee x = s^n(0)
+	$$
+	
+	If we write this procedure down as an LK proof, we get $P_{n+1}$ s.t.
+	
+	\begin{prooftree}
+		\AxiomC{$P_{n+1}$ (containing $P_n$)}
+		\UnaryInfC{$\allQ{x} x < s^{n+1}(0) \Leftrightarrow x = 0 \vee \dots \vee x = s^{n-1}(0) \vee x = s^n(0)$}
+	\end{prooftree}
+	
+\end{enumerate}
+

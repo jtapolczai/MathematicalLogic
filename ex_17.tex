@@ -1,0 +1,25 @@
+\section{Exercise 17}
+
+Prove the Theorem 10 formally: let $S, \overline{S} \subseteq \N^n$ be r.e. sets. Then, $S, \overline{S}$ are recursive sets.\\
+
+\noindent
+\textbf{Solution.} Per the definition of ``recursive set'' in the script, there exist recursive functions $\varphi_S, \varphi_{\overline{S}} : \N \rightarrow \N^n$ which, given an index $y$, will produce the $y$th tuple/element of the corresponding set.\\
+
+\noindent
+I will provide the recursive characteristic function $\chi_S$ for $S$. The one for $\overline{S}$ is fully analogous.
+
+$$
+	\begin{array}{l}
+	\chi_S \equiv \mt{Cn}[\texttt{IfThenElse}, \mt{Cn}[=, \mt{id}^1_1, (\varphi_S \circ \texttt{firstHit})], c_{1,1}, c_{1,0} ]\\
+	\mt{where}\\
+	\quad \texttt{firstHit} \equiv \mt{Mn}[ \mt{Cn}[\text{neg} \circ or, \texttt{inS}, \texttt{inScomp}]]\\
+	\quad \texttt{inS} \equiv \mt{Cn}[=, \mt{id}^2_1, \varphi_S \circ \mt{id}^2_2]\\
+	\quad \texttt{inScomp} \equiv \mt{Cn}[=, \mt{id}^2_1, \varphi_{\overline{S}} \circ \mt{id}^2_2]\\
+	\end{array}
+$$
+
+\noindent
+\paragraph{Partial correctness} Using Mn, we find the first index $y$ for which $x_1 = \varphi_S(y)$ or $x_1 = \varphi_{\overline{S}}(y)$ (\texttt{firstHit}). Having obtained $y$, we check $x_1 = \varphi_S(y)$. If that check returns 1, we know that $x_1$ is in $S$ and return 1. Otherwise, Mn must have halted because of $x_1 = \varphi_{\overline{S}}(y)$ and, correspondingly, we return 0.
+
+\paragraph{Termination} Because $x_1$ must either be in $S$ or $\overline{S}$ and because both of these sets are recursively enumerable, the call to Mn will always terminate: we enumerate all elements of both sets in parallel and are bound to encounter $x_1$ after finite time.
+

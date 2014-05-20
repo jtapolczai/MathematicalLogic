@@ -1,0 +1,36 @@
+\section{Exercise 3}
+
+Show that $\forall x(P(x) \rightarrow Q(x) \rightarrow \forall x P(x) \rightarrow \forall x Q(x)$ is valid but hat $(\forall x P(x) \rightarrow \forall x Q(x)) \rightarrow \forall x(P(x) \rightarrow Q(x)$ is not.\\
+
+\noindent
+\textbf{Solution.}
+
+\noindent
+The first formula can be proven in \textbf{LK}:
+
+\begin{prooftree}
+	\AxiomC{$P(\alpha) \vdash P(\alpha)$}
+	\AxiomC{$Q(\alpha) \vdash Q(\alpha)$}
+	\RightLabel{$\rightarrow l$}
+	\BinaryInfC{$P(\alpha) \rightarrow Q(\alpha), P(\alpha) \vdash Q(\alpha)$}
+	\RightLabel{$\forall l (x := \alpha)$}
+	\UnaryInfC{$P(\alpha) \rightarrow Q(\alpha), \forall x P(x) \vdash Q(\alpha)$}
+	\RightLabel{$\forall l (x := \alpha)$}
+	\UnaryInfC{$\forall x(P(x) \rightarrow Q(x), \forall x P(x) \vdash Q(\alpha)$}
+	\RightLabel{$\forall r (x := \alpha)$}
+	\UnaryInfC{$\forall x(P(x) \rightarrow Q(x), \forall x P(x) \vdash \forall x Q(x)$}
+	\RightLabel{$\rightarrow r$}
+	\UnaryInfC{$\forall x(P(x) \rightarrow Q(x) \vdash \forall x P(x) \rightarrow \forall x Q(x)$}
+	\RightLabel{$\rightarrow r$}
+	\UnaryInfC{$\vdash \forall x(P(x) \rightarrow Q(x) \rightarrow (\forall x P(x) \rightarrow \forall x Q(x))$}
+\end{prooftree}
+
+\noindent
+For the second, we can give a counterexample:
+$$
+	S = \{\N, \{(P(x) \mapsto x \mt{ is even}),\ (Q(x) \mapsto x \mt{ is odd})\}\}
+$$
+
+\noindent
+Informally, we can see that $\forall x P(x)$ is false, and hence, $\forall x P(x) \rightarrow \forall x Q(x)$ is true. Its consequent, $\forall x(P(x) \rightarrow Q(x)$, however, is false because $Q(x)$ is false precisely when $P(x)$ is true. Thereby the formula is falsified.
+

@@ -1,0 +1,40 @@
+\section{Exercise 21}
+
+Prove that if $F$ is a ground formula, then either $\proves{\bQ}{F}$ or $\proves{\bQ}{\neg F}$.\\
+
+\noindent
+\textbf{Solution.} We can proceed via structural induction. The base cases consists of atoms of the form $s = t$ or $s < t$, since $=$ and $<$ are the only two predicates in $L$. The step cases are formed via logical connectives.\\
+
+\begin{itemize}
+	\item[Base case ``$=$''.] Let $F$ be an atom of the form $s = t$. In Exercise 19, showed that, if $s,t$ are ground terms, then $\proves{\bQ}{s = t}$ or $\proves{\bQ}{s \neq t}$.
+	
+	\item[Base case ``$<$''.] Let $F$ be an atom of the form $s < t$. Also in Exercise 19, we showed that $\proves{\bQ}{s < t}$ or $\proves{\bQ}{s = t}$ or $\proves{\bQ}{t < s}$. Two sub-cases: 
+	
+	\begin{itemize}
+		\item If $\proves{\bQ}{s < t}$, then $\proves{\bQ}{F}$.
+		\item If $\proves{\bQ}{s = t}$ or $\proves{\bQ}{t < s}$, then, $s \neq 0 \wedge \dots \wedge s \neq t-1$\footnote{This is so because otherwise, there would be two distinct numbers $n_1,n_2$ s.t. $n_1 \neq n_2$ and $s = n_1$ and $s = n_2$. Applying Trans would then lead to a contradiction.}. Per Exercise 20, this is a direct negation of $s < t$. Thereby, we can prove $s \nleq t$.
+	\end{itemize}
+	
+	\item[Step case.] Let $F$ be $\neg F_1$, $F_1 \vee F_2$ or $F_1 \wedge F_2$.  Without quantifiers, any complete, propositional calculus (like LK) suffices to show $\proves{\bQ}{F}$ or $\proves{\bQ}{\neg F}$. 
+\end{itemize}
+
+\noindent
+Prove Proposition 11: If $F(x)$ is a formula with $x$ being the only free variable, then $\modelsS{\N}{\exQ{x} F(x)}$ iff $\proves{\bQ}{\exQ{x} F(x)}$.\\
+
+\noindent
+\textbf{Solution.}
+
+\begin{itemize}
+	\item[$\Rightarrow$-direction.] Suppose that $\modelsS{\N}{\exQ{x} F(x)}$. Then there exists a witness $n$ s.t. $F(n)$ is true. Since $F(n)$ is ground, there exists a proof $P_F$ for $F(n)$ with the theory $\bQ$, as we showed above. That proof can be transformed into one of $\exQ{x} F(x)$ thus:
+	
+	\begin{prooftree}
+		\AxiomC{$P_F$}
+		\UnaryInfC{$\proves{\bQ}{F(n)}$}
+		\RightLabel{$\exists r$}
+		\UnaryInfC{$\proves{\bQ}{F(x)}$}
+	\end{prooftree}
+	
+	\item[$\Leftarrow$-direction.] Suppose that $\bQ$ is consistent. Since we know that LK is sound and complete, it follows that LK with theory $\bQ$ is also sound --- that is, if $\proves{\bQ}{\exQ{x} F(x)}$, then $\modelsS{\N}{\exQ{x} F(x)}$. $\bQ$ is consistent if it has a model; we assume $\N$ to be such a model, although no proof of that exists in $\bQ$ itself.
+\end{itemize}
+
+

@@ -1,0 +1,74 @@
+\section{Exercise 4}
+
+Prove that the definition of $\models$ is sound for sentences $F$, i.e. $S,\phi \models F$ iff $S,\phi' \models F$ for all environments $\phi, \phi'$.\\
+
+\noindent
+\textbf{Solution.}
+We proceed inductively from the root to the leaves of the formula tree represented by $F$ --- that is, we show that, if we take any two $\phi$ and $\phi'$ and expand the definition of $\models$, then the predicates of $F$ will evaluate to the same truth value under $\phi$ and $\phi'$.\\
+
+The proof has the following structure: when we proceed downward through $F$'s formula tree, the same changes to $\phi$ and $\phi'$ are made. Taking that as an assumption, the formula will evaluate to the same value under $\phi$ and $\phi'$ when we go back up.\\
+
+\noindent
+Let $\phi$ and $\phi'$ be two arbitrary environments and $F$ be a sentence. For simplicity, we number the variables in the formula $x_1,\dots$ and identify these environments by their function graphs over $V$, that is:
+$$
+	\begin{array}{r l }
+		\phi  & = \{ (x_1,v_1), (x_2, v_2), \dots \}\\
+		\phi' & = \{ (x_1,v_1'), (x_2, v_2'), \dots \}
+	\end{array}
+$$
+
+\noindent
+Now we make a case distinction on $F$ and its subformulas:
+\begin{itemize}
+	\item $F = A \wedge B$, $F = A \vee B$, or $F = \neg A$. We proceed by evaluating the subformulas $A, B$. The environment is neither consulted nor changed.
+	
+	\item $F = \forall x_i A$. $S, \phi|\phi' \models F$ iff $S,\phi^x_d|\phi'^x_d \models F$ for all $d \in D$. We overwrite $x_i$ with some $d$ in both environments. Per definition, their function graphs (in $A$) are now:
+	
+	$$
+		\begin{array}{r l }
+			\phi^x_d = \{ (x_1,v_1),\dots,(x_i,d),(x_{i+1},v_{i+1}),\dots \}\\
+			\phi'^x_d = \{ (x_1,v_1'),\dots,(x_i,d),(x_{i+1},v_{i+1}'),\dots \}
+		\end{array}
+	$$
+	
+	\item $F = \exists x_i A$. $S, \phi|\phi' \models F$ iff $S,\phi^x_d|\phi'^x_d \models F$ for some $d \in D$.
+	
+	We again change the function graphs of $\phi, \phi'$ (but only in $A$):
+	
+	$$
+		\begin{array}{r l }
+			\phi^x_d = \{ (x_1,v_1),\dots,(x_i,d),(x_{i+1},v_{i+1}),\dots \}\\
+			\phi'^x_d = \{ (x_1,v_1'),\dots,(x_i,d),(x_{i+1},v_{i+1}'),\dots \}
+		\end{array}
+	$$
+	
+	This is analogous to the $\forall$-case, but we now choose a concrete element $d \in D$ instead of a variable one.
+	
+	\item $F = P(t_1,\dots,t_n)$. Per definition of $S, \phi|\phi' \models F$:
+		$$
+			\begin{array}{l}
+				S, \phi \models F \equiv (\phi(t_1),\dots,\phi(t_n)) \in \hat{P}\\
+				S, \phi' \models F \equiv (\phi'(t_1),\dots,\phi'(t_n)) \in \hat{P}\\
+			\end{array}
+		$$
+		
+		$\hat{P}$ only depends on $S$, not on the environment. To show that $(\phi(t_1),\dots,\phi(t_n)) \in \hat{P} \Leftrightarrow (\phi'(t_1),\dots,\phi'(t_n)) \in \hat{P}$, we prove that $\phi(t_i) = \phi'(t_i)$ for all $1 \leq i \leq n$. Induction on the depth of $t_i$'s formula tree:
+		
+		\begin{itemize}
+			\item[Base case.] $t_i = x_j \in V$: Since $F$ was a sentence, $x_j$ was bound (most recently) by a quantifier to some $d$. Per the $\forall/\exists$-cases, the function-graphs of $\phi$ and $\phi'$ contain the tuple $(x_j,d)$. Therefore, $\phi(x_j) = \phi'(x_j) = d$.
+			
+			\item[Step case.] $t_i = f(s_1,\dots,s_m)$. Per definition,
+			$$
+				\begin{array}{l}
+					\phi(t_i) = \hat{f}(\phi(s_1),\dots,\phi(s_m))\\
+					\phi'(t_i) = \hat{f}(\phi'(s_1),\dots,\phi'(s_m))
+				\end{array}
+			$$
+			
+			Per the induction hypothesis, $\phi(s_i) = \phi'(s_i)$ ($1 \leq i \leq m$). That is, the arguments of $\hat{f}$ evaluate to the same values under both environments. Since $\hat{f}$ itself depends only on $S$, it follows that $\phi(t_i) = \phi'(t_i)$.
+		\end{itemize}
+\end{itemize}
+
+
+\setcounter{section}{4}
+

@@ -1,0 +1,52 @@
+\section{Exercise 15}
+
+\begin{enumerate}
+	\item For $x,y \in \N$, write the relation $| : \N^2 \rightarrow \N$ s.t. $|(x,y) = 1$ if there exists a $k \in \N$ with $x*k = y$ and $|(x,y) = 0$ otherwise.\\
+	
+	\textbf{Solution.}
+	
+	We first define the binary relation $=$, making use of \texttt{and} as defined above and of $m$ as defined in the script:
+	
+	$$
+		\begin{array}{l}
+			=\ \equiv \mt{Cn}[(\texttt{neg} \circ \texttt{or}), m', m]\\
+			\mt{where}\\
+			\quad m' = \mt{Cn}[m, \mt{id}^2_2, \mt{id}^2_1]
+		\end{array}
+	$$
+	
+	Through $m$ and $m'$, we compute $x - y$ and $y - x$ and, through $\texttt{neg} \circ \texttt{or}$, check that both result in $0$. If so, $x = y$. We then move on to $|$:
+	
+	$$
+		\begin{array}{l}
+			| \equiv \mt{Cn}[\texttt{trymult}, \mt{id}^2_1, s \circ \mt{id}^2_2, \mt{id}^2_2]\\
+			\mt{where}\\
+			\quad \texttt{trymult} \equiv \mt{Pr}[c_{2,0}, \texttt{rec}]\\
+			\quad \texttt{rec} \equiv \mt{Cn}[\texttt{IfThenElse}, \texttt{check}, c_{4,1}, \mt{id}^4_4]\\
+			\quad \texttt{check} \equiv \mt{Cn}[=, \mt{id}^4_2, \mt{Cn}[\texttt{mult}, \mt{id}^4_1, \mt{id}^4_3]]
+		\end{array}
+	$$
+	
+	In functional notation, the algorithm is written thus:
+	\begin{verbatim}
+	|(x,y) = trymult(x,y,s(y))
+	   where trymult(x,y,0) = 0
+	         trymult(x,y,i+1) = if x*i = y then 1
+	                                     else trymult(x,y,i)
+	\end{verbatim}
+	
+	First, we duplicate the larger number +1 ($s \circ \mt{id}^2_2$) and then use it as a counter\footnote{The successor function $s$ is used to cover the edge case $x_1 = 1$.}. At each step, \texttt{rec} checks whether $x*i = y$. If so, it returns 1 ($c_{4,1}$). Otherwise, it decrements the counter and recurses ($\mt{id}^4_4$ in \texttt{rec}). If the counter reaches 0, \texttt{trymult} returns 0 ($c_{4,0}$).
+	
+	\item Show that the sets $E = \{(x,x) | x \in \N \}$ and $D = \{(x,y) | x,y \in \N, |(x,y) \}$ are p.r.\\
+	
+	\textbf{Solution.}
+	$$
+		\chi_E \equiv =
+	$$
+	$$
+		\chi_D \equiv |
+	$$
+	
+	The previously defined p.r. functions $=$ and $|$ serve as the characteristic functions of $E$ and $D$ and therefore, $E$ and $D$ are p.r.
+\end{enumerate}
+

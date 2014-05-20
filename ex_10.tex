@@ -1,0 +1,61 @@
+\section{Exercise 10}
+
+Prove Proposition 3: Let $A$ be a set of sentences [over $\mathcal{L}$]. Then $T = CL(A)$ is a theory, and $A$ is an axiomatisation of $T$. Let $S$ be a structure for $\mathcal{L}$. Then $\{F\ |\ S \models F, F \mt{ sentence over } \mathcal{L} \}$ is a theory.\\
+
+\textbf{Solution.} The first claim is that the deductive closure $T = CL(A)$ of $A$ is a theory. A theory is defined as fulfilling the condition $CL(T) = T$. If we replace $T$ with $CL(A)$, this statement becomes $CL(CL(A)) = CL(A)$, i.e. that $CL$ is idempotent. $CL(A)$ is the deductive closure , defined as $\{F\ |\ S \models F, F \mt{ sentence over } \mathcal{L} \}$ (we will henceforth assume ``$F \mt{ sentence over } \mathcal{L}$'' implicitly). Therefore:
+
+$$
+	\begin{array}{c}
+	CL(CL(A)) = CL(A)\\
+	CL(\{F\ |\ A \vdash F \}) = \{F\ |\ A \vdash F \}\\
+	\{G\ |\ \{F\ |\ A \vdash F \} \vdash G \} = \{F\ |\ A \vdash F \}
+	\end{array}
+$$
+
+Since $A \vdash A$, $CL(CL(A))$ can be expressed as
+$$
+	\{G\ |\ A \cup CL(A) \vdash G \} = \{F\ |\ A \vdash F \}.
+$$ 
+
+Now we show the inclusion in both directions. First, let $F$ be a formula in $CL(A)$, i.e. a proof $A \vdash F$ exists. To that proof, we can introduce $CL(A)$ via left weakening:
+
+\begin{prooftree}
+	\AxiomC{$A \vdash F$}
+	\RightLabel{WL}
+	\UnaryInfC{$A, CL(A) - A \vdash F$}
+	\UnaryInfC{$A \cup CL(A) \vdash F$}
+\end{prooftree}
+
+Therefore, $CL(CL(A)) \supseteq CL(A)$. For the converse case, let $G$ be a formula in $CL(CL(A))$, i.e. a proof $CL(A) \vdash G$ exists. Since such a proof can only make use of a finite number of assumptions, it is implied that a proof $F_1,\dots,F_n \vdash G$ also exists (for some $\{F_1,\dots,F_n\} \subseteq CL(A)$). We can now construct a proof $A \vdash G$ via iterated application of the cut-rule:
+
+\begin{prooftree}
+	\AxiomC{$A \vdash F_2$}
+	\AxiomC{$A \vdash F_1$}
+	\AxiomC{$F_1,F_2,\dots,F_n \vdash G$}
+	\RightLabel{cut}
+	\BinaryInfC{$A, F_2,\dots,F_n \vdash G$}
+	\RightLabel{cut}
+	\BinaryInfC{$A, A, F_3,\dots,F_n \vdash G$}
+	\UnaryInfC{$\vdots$}
+	\UnaryInfC{$A,\dots,A \vdash G$}
+	\RightLabel{$CL^*$}
+	\UnaryInfC{$A \vdash G$}
+\end{prooftree}
+
+A proof of $A \vdash G$ implies that $G \in CL(A)$. Therefore $CL(CL(A)) \subseteq CL(A)$. The two inclusions thus shown imply $CL(CL(A)) = CL(A)$.\\
+
+The second claim is that $A$ is an axiomatisation of $T$. This is simply true by definition of ``axiomatisation'': $CL(A) = T$.\\
+
+The third claim is that $\{F\ |\ S \models F, F \mt{ sentence over } \mathcal{L} \}$ is a theory. This is simply the set of sentences which, under $S$, evaluate to true --- let us call this set $T$ and form its deductive closure:
+
+$$
+	\begin{array}{l l l}
+		CL(T) & = & CL(\{F\ |\ S \models F \})\\
+		      & = & \{G\ |\ \{F\ |\ S \models F \} \vdash G \}
+	\end{array}
+$$
+
+Let, as previously, $F_1,\dots,F_n \vdash G$ be a proof in the end sequent of which only the finite subset $\{F_1,\dots, F_n\} \subseteq T$ of assumptions occurs. Per the correctness of \textbf{LK}, $$F_1,\dots,F_n \vdash G \Leftrightarrow F_1,\dots,F_n \models G.$$
+
+$F_1,\dots,F_n \models G$, in turn, means that any model of $F_1,\dots,F_n$ is also a model of $G$. Since $S$ is, by assumption, a model of $F_1,\dots,F_n$, it must also be a model of $G$. Therefore, $\forall G. G \in CL(T) \Rightarrow G \in T$, i.e. $CL(T) \subseteq T$. The converse --- $T \subseteq CL(T)$ --- holds trivially, since $\dots,F,\dots \vdash F$ is an axiom of \textbf{LK}.
+

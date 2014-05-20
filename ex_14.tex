@@ -1,0 +1,35 @@
+\section{Exercise 14}
+
+\begin{enumerate}
+	\item Show that if $S \subseteq \N^n$ is p.r., then $\N^n - S$ is p.r.\\
+	
+	\textbf{Solution.} Let $\chi_S$ be the p.r. characteristic function of $S$, i.e. $\chi_S(x_1,\dots,x_n) = 1$ if $(x_1,\dots,x_n) \in S$ and $\chi_S(x_1,\dots,x_n) = 0$ otherwise. We define the characteristic function $\chi_{\N^n - S}$ for $\N^n - S$ thus:
+	
+	$$
+		\chi_{\N^n - S} \equiv \texttt{neg} \circ \chi_S
+	$$
+	
+	The correctness of this function is trivial: we simply execute $\chi_S$ and then flip the result with \texttt{neg}. Thereby, $\chi_{\N^n - S}$ will return $1$ exactly for those tuples which are not in $S$ and 0 for those which are.
+	
+	\item Show that if $S, T \subseteq \N^n$ are p.r., then $S \cap T$ and $S \cup T$ are p.r.\\
+	
+	\textbf{Solution.} We again define the characteristic functions of these sets:
+	
+	$$
+		\begin{array}{l}
+		\chi_{S \cup T} \equiv \mt{Cn}[\texttt{or}, \chi_S,\chi_T]\\
+		\\
+		\chi_{S \cap T} \equiv \mt{Cn}[\texttt{and}, \chi_S,\chi_T]\\
+		\mt{where}\\
+		\quad \texttt{and} \equiv \mt{Cn}[(\texttt{neg} \circ \texttt{or}), (\texttt{neg} \circ \chi_S), (\texttt{neg} \circ \chi_T)]
+		\end{array}
+	$$
+	
+	Again, the correctness of these characteristic functions is trivial: we simply execute both of them. If $\chi_S$ or $\chi_T$ returns 1, the corresponding tuple is in $S \cup T$. If both $\chi_S$ and $\chi_T$ returns 1, the tuple is in $S \cap T$. \texttt{and} in the second case is just a translation of De Morgan's law $(A \wedge B) \Leftrightarrow \neg (\neg A \vee \neg B)$ into p.r. parlance.
+	
+	\item Do these statement still hold if we replace ``primitive recursive'' by ``total recursive''?\\
+	
+	\textbf{Solution.} Yes. For t.r. functions $f : D \rightarrow \N$ $dom(f) = D$ and therefore, the characteristic functions of $S$ and $T$ are defined for every tuple. The characteristic functions we constructed from these only perform p.r. transformations\footnote{The transformations can be seen as p.r. if we take the characteristic functions $\chi_S$ and $\chi_T$ as primitives exempt from the requirements of primitive recursiveness.} on these and therefore still result in total functions.
+
+\end{enumerate}
+

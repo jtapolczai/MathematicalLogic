@@ -1,0 +1,43 @@
+\section{Exercise 11}
+
+A theory $T$ is called maximally consistent if all theories $T' \supset T$ are inconsistent.
+
+\begin{enumerate}
+	\item Prove that a theory is maximally consistent iff it is complete and consistent.\\
+	
+	\noindent
+	\textbf{Solution.} 
+	Per the definition of consistency for a theory $T$, $T$ is consistent iff there is no sentenced $F$ s.t. both $T \vdash F$ and $T \vdash \neg F$.
+	It is complete iff, for every sentence $F$, $T \vdash F$ or $T \vdash \neg F$ hold.\\
+	
+	\textbf{The $\Rightarrow$-direction.} Let $T$ be a complete and consistent theory and let $T'$ be its superset. $T'$ being a superset implies that $F \in (T' - T)$ for some sentence $F$. Since $F$ is not in $T$ and $T$ is complete, $T \vdash \neg F$ must hold. That, in turn, implies that $\neg F \in T'$, making $T$ inconsistent.\\
+	
+	\textbf{The $\Leftarrow$-direction.} Let $T$ be a maximally consistent theory. We show its completeness:
+		\begin{itemize}
+			\item[Completeness] Suppose there is a sentence $F$ s.t. $F \notin T$ and $\neg F \notin T$. Then we could add either to $T$, obtaining a consistent superset. This contradicts the definition of maximal consistency.
+		\end{itemize}
+		
+	Consistency, in general, doesn't hold for maximally consistent theories as defined here. Suppose that $T = \{ F | F \mt{ is a sentence over } \mathcal{L} \}$. Then no theory $T'$ which is a strict superset of $T$ exists and therefore, ``all`` superset-theories of $T$ are inconsistent, but $T$ itself is not consistent. Consistency therefore has to be added to the definition of ``maximally consistent''.
+%\end{itemize}
+
+	\item Assume that $T$ is a theory over a language $\mathcal{L}$ containing =. Prove that the following are equivalent: (a) $T$ is inconsistent, (b) $T = \{F | F \mt{ sentence over } \mathcal{L} \}$, (c) $(\exists x x \neq x) \in T$.\\
+	
+	\textbf{Solution.} I shall prove this via a cycle of implications.
+	
+	\begin{enumerate}
+		\item[(a) $\Rightarrow$ (b)]. If $T$ is inconsistent, there exists a sentence $G$ s.t. $G \in T$ and $\neg G \in T$. From the assumptions $G,\neg G$, any sentence $F$ follows, as this LK-proof shows:
+		
+		\begin{prooftree}
+		\AxiomC{$G \vdash G, F$}
+		\RightLabel{$\neg$-l}
+		\UnaryInfC{$G, \neg G \vdash F$}
+		\end{prooftree}
+		
+		Since theories are, by definition, deductively closed, $F$ must also be in $T$. That, in turn, is exactly the definition (b).
+		
+		\item[(b) $\Rightarrow$ (c)] The implication trivially holds, since $(\exists x. x \neq x)$ is a sentence of any language that includes =.
+		
+		\item[(c) $\Rightarrow$ (a)]. $\exists x. x \neq x$ is defined as $\exists x. \neg (x = x)$, which can be further reduced to $\neg (\forall x. x = x)$. This is a direct negation of the reflexivity axiom: $\forall x. x = x)$. Thereby, $T$ is inconsistent.
+	\end{enumerate}
+\end{enumerate}
+

@@ -1,0 +1,79 @@
+\section{Exercise 5}
+
+Prove that nnf($\neg A$) = $\overline{\mt{nnf}(A)}$.\\
+
+\noindent
+\textbf{Solution.} Structural induction on the cases of the definitions of nnf($A$) and $\overline{A}$:
+
+\begin{itemize}
+	\item Base case: $A$ is an atom. By definition, $\overline{\mt{nnf} (A)} = \neg A = \mt{nnf}(\neg A)$. Note: the base case of nnf is undefined, but nnf($\neg A$) = $\neg A$ for atomic $A$ is assumed.
+	
+	\item Step cases (IH: the equivalence holds for subformulas $B,C$ of $A$):
+		\begin{enumerate}
+			\item $A = B \vee C$. By definition: 
+			
+			\begin{equation}
+				\nnf(\neg (B \vee C)) = \nnf(\neg B) \wedge \nnf(\neg C)
+			\end{equation}
+			
+			By definition of nnf and the complement:
+			
+			\begin{equation}
+				\overline{\mt{nnf}(B \vee C)} = \overline{\mt{nnf}(B) \vee \mt{nnf}(C)} = \overline{\mt{nnf}(B)} \wedge \overline{\mt{nnf}(C)} 
+			\end{equation}
+			
+			By the IH, $\nnf(\neg B) \wedge \nnf(\neg C) = \overline{\mt{nnf}(B)} \wedge \overline{\mt{nnf}(C)}$.
+			
+			\item $A = B \wedge C$. Analogous to the previous case.
+			
+			\item $A = \neg (B \vee C)$. By definition: 
+						
+			\begin{equation}
+				\nnf(\neg \neg (B \vee C)) = \nnf(B \vee C) = \nnf(B) \vee \nnf(C)
+			\end{equation}
+			
+			By definition of nnf and the complement:
+			
+			\begin{equation}
+				\overline{\mt{nnf}(\neg (B \vee C))} = \overline{\nnf(\neg B) \wedge \nnf(\neg C)} = \overline{\mt{nnf}(\neg B)} \vee \overline{\mt{nnf}(\neg C)} 
+			\end{equation}
+			
+			By the IH, $\nnf(B) \vee \nnf(C) = \overline{\mt{nnf}(\neg B)} \vee \overline{\mt{nnf}(\neg C)} $\footnote{The equivalence can be derived from the IH as follows: $\overline{\nnf(\neg F)} \underset{IH}{=} \overline{\overline{\nnf(F)}} = \nnf(F)$. This detail will be omitted in the subsequent cases where it applies.}.
+			
+			\item $A = \neg (B \wedge C)$. Analogous to the previous case.
+			
+			\item $A = \exists x B$. By definition:
+			
+			\begin{equation}
+				\nnf(\neg \exists x B) = \forall x\ \nnf(\neg B)
+			\end{equation}
+			
+			By definition of nnf and the complement:
+			
+			\begin{equation}
+				\overline{\nnf(\exists x B)} = \overline{\exists x\ \nnf(B)} = \forall x\ \overline{\nnf(B)}
+			\end{equation}
+			
+			By the IH, $\forall x\ \nnf(\neg B) = \forall x\ \overline{\nnf(B)}$.
+			
+			\item $A = \forall x B$. Analogous to the previous case (with $\exists$ and $\forall$ exchanged).
+			
+			\item $A = \neg \exists x B$. By definition:
+			
+			\begin{equation}
+				\nnf(\neg \neg \exists x B) = \nnf(\exists x B) = \exists x\ \nnf(B)
+			\end{equation}
+			
+			By definition of nns and the complement:
+			
+			\begin{equation}
+				\overline{\nnf(\neg \exists x B)} = \overline{\forall x\ \nnf(\neg B)} = \exists x\ \overline{\nnf(\neg B)}
+			\end{equation}
+			
+			By the IH, $\exists x\ \nnf(B) = \exists x\ \overline{\nnf(\neg B)}$.
+			
+			\item $A = \neg \forall x B$. Analogous to the previous case.
+			
+		\end{enumerate}
+\end{itemize}
+

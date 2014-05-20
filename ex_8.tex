@@ -1,0 +1,38 @@
+\section{Exercise 8}
+
+Complete the proof of Proposition 2 (soundness: $A \vdash \Gamma$ implies $A \models I(\Gamma)$).\\
+
+\noindent
+\textbf{Solution.} By induction on the length of the sequent proof $\pi$. The base cases have already been described; the step cases remain. As induction hypothesis, we take the soundness up to the sequent $\Gamma_{n-1}$. For simplicity, we will denote the contents of $\Gamma'$ as $\{F_1,\dots,F_k\}$. Case distinction on the derivation of the sequent $\Gamma_n$:
+
+\begin{enumerate}
+	\item $\Gamma_n = \Gamma' \cup \{A \vee B\}$ and there exists a $j < n$ s.t. $\Gamma_j = \Gamma' \cup \{A,B\}$.
+	
+	Then, by definition, $I(\Gamma_j) = I(\Gamma') \vee I(\{A,B\}) = F_1 \vee F_2 \vee \dots \vee F_k \vee A \vee B$. The interpretation $I$ of $\Gamma_n$ is $I(\Gamma_n) = I(\Gamma') \vee I(\{A \vee B\}) = I(\Gamma_j)$\footnote{This is so because the set of first-order formulas $\mathcal{F}$, together with $\vee$, forms a monoid.}.
+	
+	\item $\Gamma_n = \Gamma' \cup \{A \wedge B\}$ and there exist $j,l < n$ s.t. $\Gamma_j = \Gamma' \cup \{A\}$ and $\Gamma_l = \Gamma' \cup \{B\}$.
+	
+	Let $M$ be a model of $\Gamma_j$\footnote{The existence of a model is guaranteed by the IH.}. There are two sub-cases:
+	
+	\begin{enumerate}
+		\item $M \models I(\Gamma')$. Then, since $I$ interprets its argument as a disjunction, $M \models I(\Gamma' \cup X)$ for any $X$ --- especially for the case $X = \{A \wedge B\}$.
+		
+		\item $M \not\models I(\Gamma')$. By the IH (applied to $\Gamma_j$ and $\Gamma_l$), it must hold that $M \models I(\{A\})$ and $M \models I(\{B\})$. Consequently, $M \models I(\{A \wedge B\})$ and $M \models I(\Gamma_n)$.
+	\end{enumerate}
+	
+	\item $\Gamma_n = \Gamma' \cup \{\exists x F(x)\}$ and there exists a $j < n$ s.t. $\Gamma_j = \Gamma' \cup \{\exists x F(x), F(t)\}$ for some term $t$.
+	
+	Take again a model $M$ of $\Gamma_j$. Again, there are two sub-cases:
+	
+	\begin{enumerate}
+		\item $M \models I(\Gamma')$. See above.
+		\item $M \not\models I(\Gamma')$. Then $M \models I(\{\exists x F(x), F(t)\})$. If $M \models I(\{\exists x F(x)\})$, then\\ $M \models I(\Gamma_n)$ and we are done. If, instead, $M \models I(\{ F(t) \})$,\\ then $M, \phi^x_t \models I(\{F(x)\})$. By the semantics of $\exists x F(x)$, this implies that $M \models I(\{\exists x F(x)\})$ and we are, again, done.
+	\end{enumerate}
+	
+	\item $\Gamma_n = \Gamma' \cup \{\forall x F(x)\}$. This case is shown in the script.
+	
+	\item There exist $j,l < n$ and a formula $C$ s.t. $\Gamma_j = \Gamma_n \cup \{C\}$ and $\Gamma_l = \Gamma_n \cup \{\overline{C}\}$. By the IH, there exists a model $M_j$ of $\Gamma_j$ and a model $M_l$ of $\Gamma_l$. If either is also a model $\Gamma_n$, we are done. If we cannot find such $M_l$, $M_j$ s.t. at least one of them is a model of $\Gamma_n$, then there are models for both $C$ and $\overline{C}$. This means that the system is inconsistent and therefore, no models of $\Gamma_j$, $\Gamma_l$ exist, contradicting the IH!
+\end{enumerate}
+
+\setcounter{section}{8}
+
