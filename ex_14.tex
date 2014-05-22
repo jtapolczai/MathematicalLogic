@@ -25,7 +25,7 @@
 		\end{array}
 	$$
 	
-	Again, the correctness of these characteristic functions is trivial: we simply execute both of them. If $\chi_S$ or $\chi_T$ returns 1, the corresponding tuple is in $S \cup T$. If both $\chi_S$ and $\chi_T$ returns 1, the tuple is in $S \cap T$. \texttt{and} in the second case is just a translation of De Morgan's law $(A \wedge B) \Leftrightarrow \neg (\neg A \vee \neg B)$ into p.r. parlance.
+	Again, the correctness of these characteristic functions is trivial: we simply execute both of them. If $\chi_S$ or $\chi_T$ returns 1, the corresponding tuple is in $S \cup T$. If both $\chi_S$ and $\chi_T$ returns 1, the tuple is in $S \cap T$. \texttt{and} in the second case is just a translation of De Morgan's law $(A \wedge B) \Leftrightarrow \neg (\neg A \vee \neg B)$ into p.r. parlance\footnote{We can also define \texttt{and} more easily as $\texttt{sgn} \circ \texttt{mult}$.}.
 	
 	\item Do these statement still hold if we replace ``primitive recursive'' by ``total recursive''?\\
 	

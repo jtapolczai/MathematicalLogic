@@ -9,7 +9,16 @@
 	
 	is p.r.\\
 	
-	\textbf{Solution.} We give a p.r. characteristic function for $\pi(S)$. First, we define the template \texttt{forall}, which is instantiated with a predicate $P : \N^2 \rightarrow \N$. It takes a number $n$ and returns $1$ if $P(m) = 1$ for all $m < n$ and 0 otherwise:
+	\textbf{Solution.} We give a p.r. characteristic function for $\pi(S)$. First, we define the template \texttt{forall}, which is instantiated with a predicate $P : \N^2 \rightarrow \N$. It takes a number $n$ and returns $1$ if $P(m,n) = 1$ for all $m < n$ and 0 otherwise\footnote{If we want to be a bit more in line with recursion theory, we can define \text{forall} and \texttt{exists} in terms of \texttt{mult} and \texttt{plus}, just as we did with \text{and} and \text{or}: $$
+		\begin{array}{l l}
+			\texttt{product}_P \equiv \mt{Cn}[\mt{Pr}[c_{2,1},\cn[\texttt{mult}, \cn[P, \id^3_1, \id^3_2], \id^3_3] ], \id^1_1, \id^1_1] &
+				\texttt{product}_P = \prod\limits_{1<m<n} P(m,n)\\
+			\texttt{sum}_P \equiv \mt{Cn}[\pr[c_{2,0},\cn[\texttt{plus}, \cn[P, \id^3_1, \id^3_2], \id^3_3] ], \id^1_1, \id^1_1] &
+							\texttt{sum}_P = \sum\limits_{1<m<n} P(m,n)\\
+			\texttt{forall}_P \equiv \texttt{sgn} \circ \texttt{product}_P\\
+			\texttt{exists}_P \equiv \texttt{sgn} \circ \texttt{sum}_P\\
+		\end{array}
+	$$}:
 	
 	$$
 		\begin{array}{l}

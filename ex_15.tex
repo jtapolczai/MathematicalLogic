@@ -35,7 +35,7 @@
 	                                     else trymult(x,y,i)
 	\end{verbatim}
 	
-	First, we duplicate the larger number +1 ($s \circ \mt{id}^2_2$) and then use it as a counter\footnote{The successor function $s$ is used to cover the edge case $x_1 = 1$.}. At each step, \texttt{rec} checks whether $x*i = y$. If so, it returns 1 ($c_{4,1}$). Otherwise, it decrements the counter and recurses ($\mt{id}^4_4$ in \texttt{rec}). If the counter reaches 0, \texttt{trymult} returns 0 ($c_{4,0}$).
+	First, we duplicate the larger number +1 ($s \circ \mt{id}^2_2$) and then use it as a counter\footnote{The successor function $s$ is used to cover the edge case $x_1 = 1$.}. At each step, \texttt{rec} checks whether $x*i = y$. If so, it returns 1 ($c_{4,1}$). Otherwise, it decrements the counter and recurses ($\mt{id}^4_4$ in \texttt{rec}). If the counter reaches 0, \texttt{trymult} returns 0 ($c_{2,0}$).
 	
 	\item Show that the sets $E = \{(x,x) | x \in \N \}$ and $D = \{(x,y) | x,y \in \N, |(x,y) \}$ are p.r.\\
 	
